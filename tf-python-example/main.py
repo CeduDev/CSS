@@ -65,8 +65,8 @@ instance = ComputeInstance(
     zone="europe-central2-a",
     boot_disk=ComputeInstanceBootDisk(
         initialize_params=ComputeInstanceBootDiskInitializeParams(
-            image="debian-cloud/debian-11"
-        )
+            image="debian-cloud/debian-11", size=20
+        ),
     ),
     tags=["ssh", "http"],
     network_interface=[
