@@ -1,0 +1,13 @@
+{
+  "version": "0.18.0",
+  "stacks": {
+    "tf_python": {
+      "name": "tf_python",
+      "constructPath": "tf_python",
+      "workingDirectory": "stacks/tf_python",
+      "synthesizedStackPath": "stacks/tf_python/cdk.tf.json",
+      "annotations": [],
+      "dependencies": []
+    }
+  }
+}
