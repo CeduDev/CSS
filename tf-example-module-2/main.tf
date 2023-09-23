@@ -15,6 +15,24 @@ provider "google" {
   zone    = "europe-north1-a"
 }
 
-resource "google_compute_network" "vpc_network" {
-  name = "terraform-network"
+variable "bucket_name" {
+  type = string
+}
+
+variable "folder_name" {
+  type = string
+}
+
+resource "google_storage_bucket" "static" {
+  name          = var.bucket_name
+  location      = "EU"
+  force_destroy = true
+
+  uniform_bucket_level_access = true
+}
+
+resource "google_storage_bucket_object" "folder" {
+  name    = "${var.folder_name}/"
+  bucket  = google_storage_bucket.static.id
+  content = "foo"
 }
