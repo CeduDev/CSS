@@ -23,7 +23,7 @@ project_id = "css-cedric-2023"
 scope = App()
 stack = TerraformStack(scope, "tf_python")
 
-with open("credentials.json", "r") as credentials:
+with open("../credentials.json", "r") as credentials:
     GoogleProvider(
         stack,
         "cdktf",
