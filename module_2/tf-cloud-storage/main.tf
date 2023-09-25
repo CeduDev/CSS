@@ -8,7 +8,7 @@ terraform {
 }
 
 provider "google" {
-  credentials = file("../credentials.json")
+  credentials = file("credentials.json")
 
   project = "css-cedric-2023"
   region  = "europe-north1"
@@ -32,7 +32,8 @@ resource "google_storage_bucket" "static" {
 }
 
 resource "google_storage_bucket_object" "folder" {
-  name    = "${var.folder_name}/"
+  name    = var.folder_name
   bucket  = google_storage_bucket.static.name
   content = " "
+  content_type = "application/x-directory"
 }
