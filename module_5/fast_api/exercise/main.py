@@ -16,19 +16,15 @@ app = FastAPI()
 
 @app.on_event("startup")
 def startup_db_client():
-    # Set the correct parameters to connect to the database
     connect("fast-api-database", host="mongo", port=27017)
 
 
 @app.on_event("shutdown")
 def shutdown_db_client():
-    # Set the correct parameters to disconnect from the database
     disconnect("fast-api-database")
 
 
 # Helper functions to convert MongeEngine documents to json
-
-
 def course_to_json(course):
     course = json.loads(course.to_json())
     course["students"] = list(map(lambda dbref: str(dbref["$oid"]), course["students"]))
@@ -45,8 +41,6 @@ def student_to_json(student):
 
 
 # Schema
-
-
 class Student(Document):
     name = StringField(required=True)
     student_number = IntField()
@@ -60,8 +54,6 @@ class Course(Document):
 
 
 # Input Validators
-
-
 class CourseData(BaseModel):
     name: str
     description: str | None
@@ -85,8 +77,7 @@ async def create_student(student: StudentData):
 
 @app.get("/students/{student_id}", status_code=200)
 async def read_student(student_id: str):
-    student = Student.objects.get(id=student_id)
-    return student_to_json(student)
+    return student_to_json(Student.objects.get(id=student_id))
 
 
 @app.put("/students/{student_id}", status_code=200)
@@ -102,7 +93,6 @@ async def delete_student(student_id: str):
 
 
 # Course routes
-# Complete the Course routes similarly as per the instructions provided in A+
 @app.post("/courses", status_code=201)
 async def create_course(course: CourseData):
     new_course = Course(**course.dict()).save()
@@ -126,8 +116,7 @@ async def read_courses(tag: str | None = None, studentName: str | None = None):
 
 @app.get("/courses/{course_id}", status_code=200)
 async def read_course(course_id: str):
-    course = Course.objects.get(id=course_id)
-    return course_to_json(course)
+    return course_to_json(Course.objects.get(id=course_id))
 
 
 @app.put("/courses/{course_id}", status_code=200)
